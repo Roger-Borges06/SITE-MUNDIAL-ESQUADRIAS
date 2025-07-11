@@ -1,0 +1,289 @@
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Liga Gold | Mundial Esquadrias</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .voltar {
+      text-decoration: none;
+      color: #333;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+    }
+
+    .voltar::before {
+      content: "←";
+      margin-right: 8px;
+      font-size: 20px;
+    }
+
+    main {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .produto {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .produto-conteudo {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .imagem-retangulo {
+      width: 100%;
+      max-width: 500px;
+      height: 350px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    .imagem-retangulo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .imagem-retangulo:hover img {
+      transform: scale(1.02);
+    }
+
+    .especificacoes {
+      max-width: 600px;
+      text-align: left;
+    }
+
+    .especificacoes h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .especificacoes ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      font-size: 18px;
+    }
+
+    .orcamento-button {
+      background: linear-gradient(135deg, #FF8C00, #FF4F00);
+      color: white;
+      font-size: 18px;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-align: center;
+      display: inline-block;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .orcamento-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .orcamento-button:focus {
+      outline: none;
+    }
+
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.85);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    #modal-img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 10px;
+    }
+
+    .modal-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .modal-controls button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 48px;
+      cursor: pointer;
+      padding: 0 20px;
+    }
+
+    .fechar-modal {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 36px;
+      cursor: pointer;
+    }
+
+    @media (min-width: 1024px) {
+      .produto-conteudo {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .imagem-retangulo {
+        width: 45%;
+      }
+      .especificacoes {
+        width: 45%;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .produto-conteudo {
+        flex-direction: column;
+        align-items: center;
+      }
+      .imagem-retangulo, .especificacoes {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="javascript:history.back()" aria-label="Voltar" style="display: flex; align-items: center; text-decoration: none; color: #333;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 1-.5.5H3.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 1 1 .708.708L3.707 7.5H14.5A.5.5 0 0 1 15 8z"/>
+  </svg>
+  <span style="margin-left: 8px; font-weight: bold;">Voltar</span>
+</a>
+    <div id="menuOverlay"></div>
+    <button id="menuToggle" aria-label="Abrir menu" style="background:none; border:none; cursor:pointer;    display:none;">
+      <img src="https://img.icons8.com/ios-filled/50/000000/menu--v1.png" alt="menu" style="width:30px;   height:30px;" />
+    </button>
+  </header>
+
+  <main>
+    <h1>Brises</h1>
+
+  <div class="produto">
+    <div class="imagem-retangulo" onclick="abrirModal(0)">
+      <img src="https://i.ibb.co/PZ9ymHP1/brises1.png?text=Porta+1" alt="Porta 1" />
+    </div>
+    <div class="especificacoes">
+      <h2>Brises</h2>
+      <ul>
+        <li>Material: madeira</li>
+        <li>Acabamento: Verniz fosco ou acetinado</li>
+        <li>Medidas: 2,5m x 1,2m</li>
+        <li>Cor: Tom amadeirado claro/médio</li>
+        <li>Instalado na área superior da fachada (sobrado moderno)</li>
+      </ul>
+    <a href="https://wa.me/5534996885000?text=Gostaria de fazer um orçamento para um brises" target="_blank">
+      <button class="orcamento-button">Fazer Orçamento</button>
+    </a>
+    </div>
+  </div>
+
+  <div id="modal">
+    <span class="fechar-modal" onclick="fecharModal()">&times;</span>
+    <img id="modal-img" src="" alt="Imagem ampliada">
+    <div class="modal-controls">
+      <button onclick="mudarImagem(-1)">&#10094;</button>
+      <button onclick="mudarImagem(1)">&#10095;</button>
+    </div>
+  </div>
+
+<script>
+
+  const menuToggle = document.getElementById('menuToggle');
+  const menuNav = document.getElementById('menuNav');
+
+  menuToggle.addEventListener('click', () => {
+    menuNav.classList.toggle('show');
+  });
+
+  document.querySelectorAll('#menuNav a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (menuNav.classList.contains('show')) {
+        menuNav.classList.remove('show');
+      }
+    });
+  });
+
+    const imagens = [
+      "https://i.ibb.co/PZ9ymHP1/brises1.png"
+    ];
+
+    let imagemAtual = 0;
+
+    function abrirModal(index) {
+      imagemAtual = index;
+      document.getElementById("modal-img").src = imagens[imagemAtual];
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function fecharModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function mudarImagem(direcao) {
+      imagemAtual += direcao;
+      if (imagemAtual < 0) imagemAtual = imagens.length - 1;
+      if (imagemAtual >= imagens.length) imagemAtual = 0;
+      document.getElementById("modal-img").src = imagens[imagemAtual];
+    }
+
+</script>
+
+</body>
+</html>
